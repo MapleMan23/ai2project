@@ -8,23 +8,33 @@ import json
 #     resp = requests.get(url=url,params=params)
 #     jsonResp = resp.json
 
-f = open("2008firstgame.json")
-games2008 = json.load(f)
-
-teamRoster2008 = {} 
-
-
-for game in games2008['data']:
-    teamId = game['team']['id']
-    if teamId not in teamRoster2008.keys():
-        teamRoster2008[teamId] = []
-    teamRoster2008[teamId].append(
-        {   
-            'id': game['player']['id'],
-            'first': game['player']['first_name'],
-            'last': game['player']['last_name']        
-        }
+seasonRosters = {}
+for season in ["2008", "2009", "2010"]:
+    url = f"https://www.balldontlie.io/api/v1/stats"
+    params = dict(
+        start_date=f"{season}-10-01",
+        end_date=f"{season}-11-15",
+        per_page='1500'
     )
+    resp = requests.get(url=url,params=params)
+    games = resp.json()
+    # print(games)
 
-with open('2008roster.json','w') as outfile:
-    json.dump(teamRoster2008,outfile,indent=2)
+    teamRoster = {} 
+
+    for game in games['data']:
+        teamId = game['team']['id']
+        if teamId not in teamRoster.keys():
+            teamRoster[teamId] = []
+        player = {   
+                'id': game['player']['id'],
+                'first': game['player']['first_name'],
+                'last': game['player']['last_name']
+                }
+        if player not in teamRoster[teamId]:
+            teamRoster[teamId].append(player)
+
+    seasonRosters[season] = [teamRoster]
+
+with open('roster.json','w') as outfile:
+    json.dump(seasonRosters,outfile,indent=2)
