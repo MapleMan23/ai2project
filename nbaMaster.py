@@ -2,5 +2,6 @@ import player
 import team
 import json
 
-p1 = player.Player(1036, "2008")
-print(type(p1.data[0,0]))
+t1 = team.Team(2, 2008)
+p1 = player.Player(971, "2008", t1.schedule)
+print(p1.data)

@@ -4,10 +4,10 @@ import player as p
 
 class Team():
 	def __init__(self, teamID, season):
-		self.id = teamID
-		self.season = season
+		self.id = str(teamID)
+		self.season = str(season)
 		self.schedule = self.getScheduleDates()
-		self.roster = self.createRoster()
+		# self.roster = self.createRoster()
 
 	def createRoster(self):
 		with open(f"roster.json") as f:
@@ -19,9 +19,9 @@ class Team():
 			return np.array(roster)
 
 	def getScheduleDates(self):
-		url = f"https://www.balldontlie.io/api/v1/stats?seasons[]={self.season}&team_ids[]={self.id}&per_page=120"
+		url = f"https://www.balldontlie.io/api/v1/games?seasons[]={self.season}&team_ids[]={self.id}&per_page=120"
 		resp = requests.get(url=url)
-        games = resp.json()
+		games = resp.json()
 
-        dates = sorted([game['date'][:10] for game in games['data']])
-        return np.array(dates)
+		dates = sorted([game['date'][:10] for game in games['data']])
+		return np.array(dates)
