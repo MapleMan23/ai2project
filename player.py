@@ -13,7 +13,7 @@ class Player():
             data = {k:[] for k in stats}
             for date in schedule:
                 try:
-                    gameStats = seasonData[game]
+                    gameStats = seasonData[date]
                     for k,v in gameStats.items():
                         val = v
                         if k == 'min':
@@ -24,4 +24,4 @@ class Player():
                     for k in stats:
                         data[k].append(0.0)
 
-            return np.array([v for v in data.values()])
+            return np.array([np.array(v) for v in data.values()])

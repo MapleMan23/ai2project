@@ -1,13 +1,14 @@
 import requests 
 import numpy as np
 import player as p
+import json
 
 class Team():
 	def __init__(self, teamID, season):
 		self.id = str(teamID)
 		self.season = str(season)
 		self.schedule = self.getScheduleDates()
-		# self.roster = self.createRoster()
+		self.roster = self.createRoster()
 
 	def createRoster(self):
 		with open(f"roster.json") as f:
