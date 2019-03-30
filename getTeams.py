@@ -18,7 +18,6 @@ for season in ["2008", "2009", "2010"]:
     )
     resp = requests.get(url=url,params=params)
     games = resp.json()
-    # print(games)
 
     teamRoster = {} 
 
