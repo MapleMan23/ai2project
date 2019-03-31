@@ -8,7 +8,7 @@ class Team():
 		self.id = str(teamID)
 		self.season = str(season)
 		self.schedule = self.getScheduleDates()
-		self.roster = self.createRoster()
+		#self.roster = self.createRoster()
 
 	def createRoster(self):
 		with open(f"roster.json") as f:
