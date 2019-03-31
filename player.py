@@ -4,7 +4,8 @@ import numpy as np
 class Player():
     def __init__(self, playerID, season, schedule):
         self.id = str(playerID)
-        self.data = self.getData(season, schedule)
+        self.stats = self.getData(season, schedule)
+        self.avgMins = np.mean(self.stats[4])
 
     def getData(self, season, schedule):
         stats = ['ast','blk','dreb','oreb','min','pts','stl','turnover']

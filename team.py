@@ -11,13 +11,13 @@ class Team():
 		self.roster = self.createRoster()
 
 	def createRoster(self):
-		with open(f"roster.json") as f:
+		with open("roster.json") as f:
 			roster = []
-			team = json.load(f)[self.season][str(self.id)]
+			team = json.load(f)[self.season][0][str(self.id)]
 			for member in team:
 				roster.append(p.Player(member['id'], self.season, self.schedule))
 
-			return np.array(roster)
+			return np.array(sorted(roster, key=lambda x: x.avgMins))
 
 	def getScheduleDates(self):
 		url = f"https://www.balldontlie.io/api/v1/games?seasons[]={self.season}&team_ids[]={self.id}&per_page=120"
