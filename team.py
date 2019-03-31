@@ -11,7 +11,7 @@ class Team():
 		self.roster = self.createRoster()
 
 	def createRoster(self):
-		with open("roster.json") as f:
+		with open("data/roster.json") as f:
 			roster = []
 			team = json.load(f)[self.season][0][str(self.id)]
 			for member in team:

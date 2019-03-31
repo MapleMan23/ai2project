@@ -9,7 +9,7 @@ class Player():
 
     def getData(self, season, schedule):
         stats = ['ast','blk','dreb','oreb','min','pts','stl','turnover']
-        with open(f"{season}StatsWithDates.json") as f:
+        with open(f"data/{season}StatsWithDates.json") as f:
             seasonData = json.load(f)[self.id][0]
             data = {k:[] for k in stats}
             for date in schedule:
