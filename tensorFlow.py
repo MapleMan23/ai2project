@@ -25,22 +25,28 @@ train_labels = train_csv[:,-1]
 test_data = test_csv[:,1:-1]
 test_labels = test_csv[:,-1]
 
-num_train, num_features = train_data.shape
-model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(num_features,)),
-    keras.layers.Dense(num_features, activation=tf.nn.relu),
-    keras.layers.Dense(num_features, activation=tf.nn.relu),
-    keras.layers.Dense(2, activation=tf.nn.softmax),
-    keras.layers.Dense(1, activation=tf.nn.sigmoid)
-])
+acc = []
+for i in range(0,11):
 
-model.compile(
-    optimizer='adam',
-    loss='binary_crossentropy',
-    metrics=['accuracy']
-)
+    num_train, num_features = train_data.shape
+    model = keras.Sequential([
+        keras.layers.Flatten(input_shape=(num_features,)),
+        keras.layers.Dense(num_features, activation=tf.nn.relu),
+        keras.layers.Dense(num_features, activation=tf.nn.relu),
+        keras.layers.Dense(num_features, activation=tf.nn.relu),
+        keras.layers.Dense(2, activation=tf.nn.softmax),
+        keras.layers.Dense(1, activation=tf.nn.sigmoid)
+    ])
 
-model.fit(train_data, train_labels, epochs=20)
+    model.compile(
+        optimizer='Nadam',
+        loss='binary_crossentropy',
+        metrics=['accuracy']
+    )
 
-test_loss, test_acc = model.evaluate(test_data,test_labels)
-print('Test accuracy: ', test_acc)
+    model.fit(train_data, train_labels, epochs=(30+i))
+    test_loss, test_acc = model.evaluate(test_data,test_labels)
+    acc.append(test_acc)
+    model.reset_states()
+
+print(acc)
