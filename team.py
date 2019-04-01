@@ -26,3 +26,17 @@ class Team():
 
 		dates = sorted([game['date'][:10] for game in games['data']])
 		return np.array(dates)
+
+	def getGameNum(self, gameDate):
+		for i, date in enumerate(self.schedule):
+			if date == gameDate:
+				return i
+
+	def getStats(self, date):
+		gameNum = self.getGameNum(date)
+
+		stats = []
+		for player in self.roster:
+			stats.append(player.getStats(gameNum))
+
+		return np.array(stats).flatten()
