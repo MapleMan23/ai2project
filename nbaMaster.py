@@ -4,15 +4,17 @@ import json
 import time
 import numpy as np
 
+season = 2010
+
 now = time.time()
 teams = []
-for id in range(1,2):
-	teams.append(team.Team(id, 2010))
+for id in range(1,31):
+	teams.append(team.Team(id, season))
 # print(time.time() - now)
 
 dtype = [('date', '|S10'), ('home', int), ('visitor', int), ('homeWin', int)]
 games = []
-with open('data/2010GameResults.csv') as f:
+with open(f'data/{season}GameResults.csv') as f:
 	for line in f:
 		date, home, visitor, homeWin = line.split(',')
 		if date == 'Date':
@@ -22,7 +24,6 @@ with open('data/2010GameResults.csv') as f:
 		# print(games[-1])
 
 games = np.sort(np.array(games, dtype=dtype), order=['date', 'home', 'visitor'])
-
 
 # print(games[homeGames + awayGames]['date'])
 # print(allGames)
@@ -53,8 +54,8 @@ for team in teams:
 
 train = np.array(train)
 
-print(train)
-with open('train2010.csv', 'w') as f:
+# print(train)
+with open(f'train{season}.csv', 'w') as f:
 	# np.savetxt(f, train, delimiter=',')
 	for row in train:
 		f.write(','.join(row))
