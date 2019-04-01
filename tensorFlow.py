@@ -7,14 +7,16 @@ import random
 # Helper libraries
 import numpy as np
 import matplotlib.pyplot as plt
+data = []
+seasons = ["2008","2009","2010"]
+maxlen = 0
+for i,season in enumerate(seasons):
+    data.append(np.genfromtxt(f"train{season}.csv", delimiter=','))
+    if len(data[i][0]) > maxlen:
+        maxlen = len(data[i][0])
 
-data2008 = np.genfromtxt("train2008.csv", delimiter=',')
-data2009 = np.genfromtxt("train2009.csv", delimiter=',')
-# data2010 = np.genfromtxt("train2010.csv", delimiter=',')
-# print(data2010.shape)
-
-data_csv = np.concatenate([data2008,data2009])
-
+data_csv = np.concatenate(data)
+print(data_csv)
 random.shuffle(data_csv)
 train_csv = data_csv[:int(len(data_csv) * 0.70)]
 test_csv = data_csv[len(train_csv):]

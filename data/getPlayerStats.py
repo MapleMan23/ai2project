@@ -10,7 +10,7 @@ import collections
 #     jsonResp = resp.json
 
 playerStats = {}
-seasons = ["2008","2009",'2010']
+seasons = ["2011"]
 stats = ['ast','blk','dreb','oreb','min','pts','stl','turnover']
 
 f = open('roster.json')
