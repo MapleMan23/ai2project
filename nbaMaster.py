@@ -4,7 +4,7 @@ import json
 import time
 import numpy as np
 
-season = 2010
+season = 2008
 
 now = time.time()
 teams = []
@@ -38,13 +38,13 @@ for team in teams:
 
 	for game in allGames:
 		if game in gamesProccessed:
-			break
+			continue
 		else:
 			gamesProccessed.append(game)
 
 		gameDate = game['date'].decode('utf-8')
-		homeTeam = teams[0]#int(game['home'])-1]
-		awayTeam = teams[0]#int(game['visitor'])-1]
+		homeTeam = teams[int(game['home'])-1]
+		awayTeam = teams[int(game['visitor'])-1]
 
 		homePlayers = homeTeam.getStats(gameDate)
 		awayPlayers = awayTeam.getStats(gameDate)

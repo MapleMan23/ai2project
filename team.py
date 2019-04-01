@@ -28,10 +28,16 @@ class Team():
 		return np.array(dates)
 
 	def getGameNum(self, gameDate):
+		gameNum = None
 		for i, date in enumerate(self.schedule):
 			if date == gameDate:
-				return i
+				gameNum = i
+				break
 
+		if gameNum is None:
+			print(gameDate, self.id)
+
+		return gameNum
 	def getStats(self, date):
 		gameNum = self.getGameNum(date)
 
