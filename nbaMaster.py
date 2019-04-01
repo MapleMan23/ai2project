@@ -7,17 +7,17 @@ import numpy as np
 now = time.time()
 teams = []
 for id in range(1,2):
-	teams.append(team.Team(id, 2008))
+	teams.append(team.Team(id, 2010))
 # print(time.time() - now)
 
 dtype = [('date', '|S10'), ('home', int), ('visitor', int), ('homeWin', int)]
 games = []
-with open('data/2008GameResults.csv') as f:
+with open('data/2010GameResults.csv') as f:
 	for line in f:
 		date, home, visitor, homeWin = line.split(',')
-		# if game[0] == 'Date':
-		# 	break
-		# print(str(date))
+		if date == 'Date':
+			continue
+		#print(str(date))
 		games.append((date, int(home), int(visitor), int(homeWin)))
 		# print(games[-1])
 
@@ -53,8 +53,8 @@ for team in teams:
 
 train = np.array(train)
 
-# print(train)
-with open('train.csv', 'w') as f:
+print(train)
+with open('train2010.csv', 'w') as f:
 	# np.savetxt(f, train, delimiter=',')
 	for row in train:
 		f.write(','.join(row))
