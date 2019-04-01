@@ -11,7 +11,7 @@ for season in seasons:
     f.close()
 
     # Open a new file for game data
-    outFile = open(f"{season}GameResults.json", "w")
+    outFile = open(f"{season}GameResults.csv", "w")
     games = games['data']
 
     for game in games:
