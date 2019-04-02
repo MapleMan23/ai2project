@@ -23,9 +23,9 @@ for season in roster:
     for teams in roster[season]:
         # print(teams)
         for team in teams:
-            print(team)
+            # print(team)
             for player in teams[team]:
-                print(player)
+                # print(player)
                 url = f"https://www.balldontlie.io/api/v1/stats?seasons[]={season}&player_ids[]={player['id']}&per_page=120"
                 resp = requests.get(url=url)
                 games = resp.json()
