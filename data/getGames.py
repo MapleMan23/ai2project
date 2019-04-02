@@ -1,17 +1,17 @@
 import json
 
 data = []
-seasons = ["2011","2012","2013", "2014"]
+seasons = ["2012","2013", "2014"]
 
 
 for season in seasons:
     # Get the season data
-    f = open(f"data/{season}Games.json")
+    f = open(f"{season}Games.json")
     games = json.load(f)
     f.close()
 
     # Open a new file for game data
-    outFile = open(f"data/{season}GameResults.csv", "w")
+    outFile = open(f"{season}GameResults.csv", "w")
     games = games['data']
 
     for game in games:

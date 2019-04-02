@@ -4,7 +4,7 @@ import json
 import time
 import numpy as np
 
-seasons = [2008, 2009, 2010]
+seasons = [2012, 2013, 2014]
 for season in seasons:
 	now = time.time()
 	teams = []
