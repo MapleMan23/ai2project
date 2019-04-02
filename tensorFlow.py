@@ -17,7 +17,7 @@ for i,season in enumerate(seasons):
 
 data_csv = np.concatenate(data)
 random.shuffle(data_csv) 
-train_csv = data_csv[:int(len(data_csv) * 0.60)]
+train_csv = data_csv[:int(len(data_csv) * 0.70)]
 test_csv = data_csv[len(train_csv):]
 
 train_data = train_csv[:,1:-1]
@@ -39,9 +39,9 @@ for i in range(1):
         # keras.layers.Dense(int(num_features/2), activation=tf.nn.relu),
         #keras.layers.Dense(num_features/4, activation=tf.nn.relu),
         # keras.layers.Dense(2, activation=tf.nn.relu),
-        # 
         keras.layers.Dense(1, activation="sigmoid")
     ])
+    tf.keras.utils.plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
     convergence = keras.callbacks.EarlyStopping(patience=50)
 
@@ -57,6 +57,7 @@ for i in range(1):
     # model.summary()
     # model.reset_states()
     #print(model.output)
+
 
 print("Acc: ",acc)
 print("Time: ",time.time() - t)
