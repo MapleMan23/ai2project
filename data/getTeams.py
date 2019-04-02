@@ -9,7 +9,7 @@ import json
 #     jsonResp = resp.json
 
 seasonRosters = {}
-for season in ["2008", "2009", "2010"]:
+for season in ["2008", "2009", "2010","2011","2012","2013","2014"]:
     url = f"https://www.balldontlie.io/api/v1/stats"
     params = dict(
         start_date=f"{season}-10-01",

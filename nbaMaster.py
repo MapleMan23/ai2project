@@ -4,59 +4,59 @@ import json
 import time
 import numpy as np
 
-season = 2010
+seasons = [2008, 2009, 2010]
+for season in seasons:
+	now = time.time()
+	teams = []
+	for id in range(1,31):
+		teams.append(team.Team(id, season))
+	# print(time.time() - now)
 
-now = time.time()
-teams = []
-for id in range(1,31):
-	teams.append(team.Team(id, season))
-# print(time.time() - now)
+	dtype = [('date', '|S10'), ('home', int), ('visitor', int), ('homeWin', int)]
+	games = []
+	with open(f'data/{season}GameResults.csv') as f:
+		for line in f:
+			date, home, visitor, homeWin = line.split(',')
+			if date == 'Date':
+				continue
+			#print(str(date))
+			games.append((date, int(home), int(visitor), int(homeWin)))
+			# print(games[-1])
 
-dtype = [('date', '|S10'), ('home', int), ('visitor', int), ('homeWin', int)]
-games = []
-with open(f'data/{season}GameResults.csv') as f:
-	for line in f:
-		date, home, visitor, homeWin = line.split(',')
-		if date == 'Date':
-			continue
-		#print(str(date))
-		games.append((date, int(home), int(visitor), int(homeWin)))
-		# print(games[-1])
+	games = np.sort(np.array(games, dtype=dtype), order=['date', 'home', 'visitor'])
 
-games = np.sort(np.array(games, dtype=dtype), order=['date', 'home', 'visitor'])
+	# print(games[homeGames + awayGames]['date'])
+	# print(allGames)
+	# print(teams)
+	train = []
+	gamesProccessed = []
+	for teami in teams:
+		teamid = int(teami.id)
+		homeGames = games['home'] == teamid 
+		awayGames = games['visitor'] == teamid
+		allGames = np.sort(games[homeGames + awayGames], order='date')
 
-# print(games[homeGames + awayGames]['date'])
-# print(allGames)
-# print(teams)
-train = []
-gamesProccessed = []
-for team in teams:
-	teamid = int(team.id)
-	homeGames = games['home'] == teamid 
-	awayGames = games['visitor'] == teamid
-	allGames = np.sort(games[homeGames + awayGames], order='date')
+		for game in allGames:
+			if game in gamesProccessed:
+				continue
+			else:
+				gamesProccessed.append(game)
 
-	for game in allGames:
-		if game in gamesProccessed:
-			break
-		else:
-			gamesProccessed.append(game)
+			gameDate = game['date'].decode('utf-8')
+			homeTeam = teams[int(game['home'])-1]
+			awayTeam = teams[int(game['visitor'])-1]
 
-		gameDate = game['date'].decode('utf-8')
-		homeTeam = teams[0]#int(game['home'])-1]
-		awayTeam = teams[0]#int(game['visitor'])-1]
+			homePlayers = homeTeam.getStats(gameDate)
+			awayPlayers = awayTeam.getStats(gameDate)
 
-		homePlayers = homeTeam.getStats(gameDate)
-		awayPlayers = awayTeam.getStats(gameDate)
+			row = np.concatenate(([gameDate], homePlayers, awayPlayers, [str(game['homeWin'])]))
+			train.append(row)
 
-		row = np.concatenate(([gameDate], homePlayers, awayPlayers, [str(game['homeWin'])]))
-		train.append(row)
+	train = np.array(train)
 
-train = np.array(train)
-
-# print(train)
-with open(f'train{season}.csv', 'w') as f:
-	# np.savetxt(f, train, delimiter=',')
-	for row in train:
-		f.write(','.join(row))
-		f.write('\n')
+	# print(train)
+	with open(f'train{season}.csv', 'w') as f:
+		# np.savetxt(f, train, delimiter=',')
+		for row in train:
+			f.write(','.join(row))
+			f.write('\n')

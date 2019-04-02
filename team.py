@@ -17,7 +17,7 @@ class Team():
 			for member in team:
 				roster.append(p.Player(member['id'], self.season, self.schedule))
 
-			return np.array(sorted(roster, key=lambda x: x.avgMins, reverse=True)[:12])
+			return np.array(sorted(roster, key=lambda x: x.avgMins, reverse=True)[:10])
 
 	def getScheduleDates(self):
 		url = f"https://www.balldontlie.io/api/v1/games?seasons[]={self.season}&team_ids[]={self.id}&per_page=120"
